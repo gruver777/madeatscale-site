@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageIntro } from "@/components/PageIntro";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductImage } from "@/components/ProductImage";
 import { ShowroomPLP } from "@/components/ShowroomPLP";
 import { products, ranges, site } from "@/lib/site";
 
@@ -33,7 +33,14 @@ export default function ShowroomPage() {
               className="group flex items-center gap-4 border border-forest/10 bg-paper p-3 transition hover:border-bronze"
             >
               <div className="w-20 shrink-0 overflow-hidden">
-                <PlaceholderMedia tone={range.tone} className="aspect-square" label="" />
+                <ProductImage
+                  src={"heroImage" in range ? range.heroImage : undefined}
+                  alt={range.name}
+                  tone={range.tone}
+                  className="aspect-square"
+                  sizes="80px"
+                  label=""
+                />
               </div>
               <div>
                 <h2 className="font-display text-xl text-forest">{range.name}</h2>
@@ -48,7 +55,7 @@ export default function ShowroomPage() {
 
       <section className="mx-auto max-w-[1400px] px-5 pb-28 md:px-8">
         <div className="mb-10">
-          <p className="eyebrow text-bronze">All pieces · stubs</p>
+          <p className="eyebrow text-bronze">All pieces · live catalogue photos</p>
           <h2 className="mt-3 font-display text-4xl text-forest">Catalogue</h2>
         </div>
         <ShowroomPLP products={products} />

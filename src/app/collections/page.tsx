@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageIntro } from "@/components/PageIntro";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
-import { collections } from "@/lib/site";
+import { ProductImage } from "@/components/ProductImage";
+import { collectionHeroImage, collections } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Collections",
@@ -24,10 +24,13 @@ export default function CollectionsPage() {
             <li key={c.key}>
               <Link href={`/collections/${c.slug}`} className="group block">
                 <div className="tile-hover overflow-hidden">
-                  <PlaceholderMedia
+                  <ProductImage
+                    src={collectionHeroImage(c.key)}
+                    alt={c.label}
                     tone={c.tone}
                     className="aspect-[4/3]"
-                    label={`Placeholder — ${c.label}`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    label={c.label}
                   />
                 </div>
                 <p className="mt-4 text-[11px] uppercase tracking-[0.16em] text-bronze">

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/PageIntro";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductImage } from "@/components/ProductImage";
 import { ProductCard } from "@/components/ProductCard";
 import {
   collectionBySlug,
+  collectionHeroImage,
   collections,
   productsByCollection,
 } from "@/lib/site";
@@ -41,10 +42,14 @@ export default async function CollectionPage({ params }: Props) {
         lede={`${collection.spine}. For ${collection.audience}. Essay, photography, and linked SKUs follow — families on the pieces stay as catalogue names.`}
       />
       <section className="mx-auto max-w-[1400px] px-5 pb-28 md:px-8">
-        <PlaceholderMedia
+        <ProductImage
+          src={collectionHeroImage(collection.key)}
+          alt={collection.label}
           tone={collection.tone}
           className="mb-12 aspect-[21/9] min-h-48"
-          label={`Placeholder — ${collection.label}`}
+          sizes="100vw"
+          priority
+          label={collection.label}
         />
         <div className="max-w-2xl space-y-5 text-base leading-8 text-mute">
           <p>

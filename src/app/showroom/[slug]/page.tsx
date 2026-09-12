@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/PageIntro";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductImage } from "@/components/ProductImage";
 import { ShowroomPLP } from "@/components/ShowroomPLP";
 import { productsByRange, rangeBySlug, ranges } from "@/lib/site";
 
@@ -33,10 +33,14 @@ export default async function RangePage({ params }: Props) {
     <>
       <PageIntro kicker="Showroom" title={range.name} lede={range.blurb} />
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-8">
-        <PlaceholderMedia
+        <ProductImage
+          src={"heroImage" in range ? range.heroImage : undefined}
+          alt={`${range.name} range`}
           tone={range.tone}
           className="mb-14 aspect-[21/8] min-h-56"
-          label="Placeholder — range hero"
+          sizes="100vw"
+          priority
+          label="Range"
         />
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-5">

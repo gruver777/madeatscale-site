@@ -66,7 +66,17 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="mt-8 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-7">
-          <ProductGallery tone={range?.tone ?? "slate"} name={product.name} />
+          <ProductGallery
+            tone={range?.tone ?? "slate"}
+            name={product.name}
+            images={
+              product.gallery?.length
+                ? product.gallery
+                : product.image
+                  ? [product.image]
+                  : []
+            }
+          />
         </div>
         <div className="md:col-span-5">
           <div className="flex flex-wrap items-center gap-2">

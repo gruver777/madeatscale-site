@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { CoastalStrip } from "@/components/CoastalStrip";
 import { LifestyleImage } from "@/components/LifestyleImage";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductImage } from "@/components/ProductImage";
 import { lifestyle } from "@/lib/lifestyle";
-import { collections, materials, projects, ranges, site } from "@/lib/site";
+import {
+  collectionHeroImage,
+  collections,
+  materials,
+  projects,
+  ranges,
+  site,
+} from "@/lib/site";
 
 export default function Home() {
   const proof = [...projects, ...projects];
@@ -75,8 +82,7 @@ export default function Home() {
           </div>
           <p className="max-w-md text-sm leading-7 text-mute">
             Six live ranges from the showroom — no invented inventory.
-            Product photography is still placeholder texture until the studio
-            set is recaptured.
+            Range tiles use real catalogue photography from madeatscale.com.
           </p>
         </div>
 
@@ -88,10 +94,13 @@ export default function Home() {
               className="group block"
             >
               <div className="tile-hover overflow-hidden">
-                <PlaceholderMedia
+                <ProductImage
+                  src={"heroImage" in range ? range.heroImage : undefined}
+                  alt={range.name}
                   tone={range.tone}
-                  label="Placeholder texture"
+                  label="Range"
                   className="aspect-[4/3]"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
               <div className="flex items-baseline justify-between gap-4 pt-4">
@@ -124,10 +133,13 @@ export default function Home() {
             {collections.map((c) => (
               <Link key={c.key} href={`/collections/${c.slug}`} className="group block">
                 <div className="tile-hover overflow-hidden">
-                  <PlaceholderMedia
+                  <ProductImage
+                    src={collectionHeroImage(c.key)}
+                    alt={c.label}
                     tone={c.tone}
                     label={c.label}
                     className="aspect-[3/4]"
+                    sizes="(max-width: 640px) 50vw, 20vw"
                   />
                 </div>
                 <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-bronze">

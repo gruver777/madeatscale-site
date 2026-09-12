@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AddToCartButton } from "@/components/AddToCartButton";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductImage } from "@/components/ProductImage";
 import {
   collectionForProduct,
   formatPriceZar,
@@ -25,10 +25,17 @@ export function ProductCard({ product, large = false }: Props) {
       <Link href={`/products/${product.slug}`} className="block">
         <div className="relative overflow-hidden">
           <div className="tile-hover overflow-hidden">
-            <PlaceholderMedia
+            <ProductImage
+              src={product.image}
+              alt={product.name}
               tone={tone}
               className={large ? "aspect-[4/5]" : "aspect-[4/3]"}
-              label="Placeholder — product"
+              sizes={
+                large
+                  ? "(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  : "(max-width: 768px) 100vw, 33vw"
+              }
+              label="Product"
             />
           </div>
           {collection ? (

@@ -1,0 +1,33 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Latest Designs killed — keep a 301 for bookmarks / old nav
+      {
+        source: "/latest-designs",
+        destination: "/showroom",
+        permanent: true,
+      },
+      {
+        source: "/latest-designs/:path*",
+        destination: "/showroom",
+        permanent: true,
+      },
+      // Legacy TBD collection slugs → locked names
+      { source: "/collections/tbd-workplace", destination: "/collections/quench", permanent: true },
+      { source: "/collections/tbd-dining", destination: "/collections/grain", permanent: true },
+      { source: "/collections/tbd-hospitality", destination: "/collections/kiln", permanent: true },
+      { source: "/collections/tbd-campus", destination: "/collections/load", permanent: true },
+      { source: "/collections/tbd-statement", destination: "/collections/spine", permanent: true },
+      // Where to Buy folded into Contact
+      {
+        source: "/where-to-buy",
+        destination: "/contact",
+        permanent: true,
+      },
+    ];
+  },
+};
+
+export default nextConfig;

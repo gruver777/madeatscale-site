@@ -1,0 +1,99 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { PageIntro } from "@/components/PageIntro";
+import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { ProductCard } from "@/components/ProductCard";
+import { productsByRange, rangeBySlug, ranges } from "@/lib/site";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export function generateStaticParams() {
+  return ranges.map((range) => ({ slug: range.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const range = rangeBySlug(slug);
+  if (!range) return { title: "Range" };
+  return {
+    title: range.name,
+    description: range.blurb,
+  };
+}
+
+export default async function RangePage({ params }: Props) {
+  const { slug } = await params;
+  const range = rangeBySlug(slug);
+  if (!range) notFound();
+
+  const rangeProducts = productsByRange(range.slug);
+
+  return (
+    <>
+      <PageIntro kicker="Showroom" title={range.name} lede={range.blurb} />
+      <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-8">
+        <PlaceholderMedia
+          tone={range.tone}
+          className="mb-14 aspect-[21/8] min-h-56"
+          label="Placeholder — range hero"
+        />
+        <div className="grid gap-16 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="eyebrow text-bronze">In this range</p>
+            <ul className="mt-5 space-y-3">
+              {range.groups.map((group) => (
+                <li key={group} className="border-b border-forest/10 py-3 font-display text-2xl text-forest">
+                  {group}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="md:col-span-6 md:col-start-7">
+            <p className="eyebrow text-bronze">Lines you may already specify</p>
+            <p className="mt-5 text-base leading-8 text-mute">
+              Family names from the live catalogue (Chroma, Tekton, Elemento…).
+              Public ZAR shows when migrated; otherwise Request quote. Cart stays
+              on for priced pieces. Brand worlds live under Collections — Quench,
+              Grain, Kiln, Load, Spine.
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {range.lines.map((line) => (
+                <li
+                  key={line}
+                  className="border border-forest/15 px-3 py-1.5 text-[12px] uppercase tracking-[0.14em] text-forest"
+                >
+                  {line}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link href="/order" className="btn-solid">
+                Specify this range
+              </Link>
+              <Link href="/showroom" className="btn-ghost text-forest">
+                All ranges
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {rangeProducts.length > 0 ? (
+          <div className="mt-20">
+            <p className="eyebrow text-bronze">In this range · stubs</p>
+            <h2 className="mt-3 font-display text-3xl text-forest">Sample pieces</h2>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-mute">
+              Catalogue stubs for PDP / card UI. No invented ZAR — Request quote
+              until real prices migrate.
+            </p>
+            <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {rangeProducts.map((product) => (
+                <ProductCard key={product.slug} product={product} tone={range.tone} />
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </section>
+    </>
+  );
+}

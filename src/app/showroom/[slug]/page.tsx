@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/PageIntro";
 import { PlaceholderMedia } from "@/components/PlaceholderMedia";
-import { ProductCard } from "@/components/ProductCard";
+import { ShowroomPLP } from "@/components/ShowroomPLP";
 import { productsByRange, rangeBySlug, ranges } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -43,7 +43,10 @@ export default async function RangePage({ params }: Props) {
             <p className="eyebrow text-bronze">In this range</p>
             <ul className="mt-5 space-y-3">
               {range.groups.map((group) => (
-                <li key={group} className="border-b border-forest/10 py-3 font-display text-2xl text-forest">
+                <li
+                  key={group}
+                  className="border-b border-forest/10 py-3 font-display text-2xl text-forest"
+                >
                   {group}
                 </li>
               ))}
@@ -54,8 +57,8 @@ export default async function RangePage({ params }: Props) {
             <p className="mt-5 text-base leading-8 text-mute">
               Family names from the live catalogue (Chroma, Tekton, Elemento…).
               Public ZAR shows when migrated; otherwise Request quote. Cart stays
-              on for priced pieces. Brand worlds live under Collections — Quench,
-              Grain, Kiln, Load, Spine.
+              on. Brand worlds live under Collections — Quench, Grain, Kiln, Load,
+              Spine.
             </p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {range.lines.map((line) => (
@@ -78,21 +81,35 @@ export default async function RangePage({ params }: Props) {
           </div>
         </div>
 
-        {rangeProducts.length > 0 ? (
-          <div className="mt-20">
-            <p className="eyebrow text-bronze">In this range · stubs</p>
-            <h2 className="mt-3 font-display text-3xl text-forest">Sample pieces</h2>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-mute">
-              Catalogue stubs for PDP / card UI. No invented ZAR — Request quote
-              until real prices migrate.
-            </p>
-            <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {rangeProducts.map((product) => (
-                <ProductCard key={product.slug} product={product} tone={range.tone} />
-              ))}
-            </div>
+        <div className="mt-20">
+          <p className="eyebrow text-bronze">In this range</p>
+          <h2 className="mt-3 font-display text-3xl text-forest">Pieces</h2>
+          <p className="mt-3 max-w-xl text-sm leading-7 text-mute">
+            Facets filter local stubs. No invented ZAR — Request quote until real
+            prices migrate.
+          </p>
+          <div className="mt-10">
+            {rangeProducts.length > 0 ? (
+              <ShowroomPLP
+                products={rangeProducts}
+                hideCollectionFacet={false}
+                emptyTitle="Nothing in this range matches the facets."
+              />
+            ) : (
+              <div className="border border-forest/10 bg-paper px-8 py-16 text-center">
+                <p className="font-display text-3xl text-forest">
+                  No sample pieces in this range yet.
+                </p>
+                <p className="mt-3 text-sm text-mute">
+                  Catalogue stubs will land as migration continues.
+                </p>
+                <Link href="/showroom" className="btn-ghost mt-8 inline-flex text-forest">
+                  All showroom
+                </Link>
+              </div>
+            )}
           </div>
-        ) : null}
+        </div>
       </section>
     </>
   );

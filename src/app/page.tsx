@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { CoastalStrip } from "@/components/CoastalStrip";
+import { LifestyleImage } from "@/components/LifestyleImage";
 import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { lifestyle } from "@/lib/lifestyle";
 import { collections, materials, projects, ranges, site } from "@/lib/site";
 
 export default function Home() {
@@ -31,14 +34,14 @@ export default function Home() {
           </div>
 
           <div className="md:col-span-6 lg:col-span-6">
-            <div className="relative aspect-[4/3] overflow-hidden md:aspect-[5/4]">
-              <div className="hero-shimmer placeholder-grain absolute inset-0 bg-linear-to-br from-[#15241f] via-[#3d4a3c] to-[#BF9D7E]" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(191,157,126,0.28),transparent_50%)]" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-[10px] uppercase tracking-[0.2em] text-cream/70">
-                <span>Placeholder — studio film loop</span>
-                <span>Steel · Timber</span>
-              </div>
-            </div>
+            <LifestyleImage
+              shot={lifestyle.hero}
+              className="aspect-[4/3] md:aspect-[5/4]"
+              overlay="soft"
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              showCaption
+            />
           </div>
         </div>
       </section>
@@ -72,8 +75,8 @@ export default function Home() {
           </div>
           <p className="max-w-md text-sm leading-7 text-mute">
             Six live ranges from the showroom — no invented inventory.
-            Photography here is placeholder texture until the studio set is
-            recaptured.
+            Product photography is still placeholder texture until the studio
+            set is recaptured.
           </p>
         </div>
 
@@ -145,6 +148,8 @@ export default function Home() {
         </div>
       </section>
 
+      <CoastalStrip />
+
       <section className="bg-forest text-cream">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-20 md:grid-cols-12 md:px-8 md:py-24">
           <div className="md:col-span-5">
@@ -176,7 +181,13 @@ export default function Home() {
       <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
         <div className="grid gap-12 md:grid-cols-12 md:items-center">
           <div className="md:col-span-6">
-            <PlaceholderMedia tone="timber" className="aspect-[5/4]" label="Placeholder — workshop" />
+            <LifestyleImage
+              shot={lifestyle.ridge}
+              className="aspect-[5/4]"
+              overlay="soft"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              showCaption
+            />
           </div>
           <div className="md:col-span-5 md:col-start-8">
             <p className="eyebrow text-bronze">Order at Scale</p>

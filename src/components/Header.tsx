@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useCart } from "@/components/CartProvider";
 import { primaryNav, site } from "@/lib/site";
 
 function isActive(pathname: string, href: string) {
@@ -13,6 +14,7 @@ function isActive(pathname: string, href: string) {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { count, hydrated } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-forest/10 bg-cream/90 backdrop-blur-md">
@@ -68,7 +70,7 @@ export function Header() {
               href="/cart"
               className="hidden text-[13px] tracking-[0.08em] uppercase text-mute transition-colors hover:text-forest sm:inline"
             >
-              Cart
+              Cart{hydrated && count > 0 ? ` (${count})` : ""}
             </Link>
           ) : null}
           <Link href="/order" className="btn-solid hidden sm:inline-flex">
@@ -131,7 +133,7 @@ export function Header() {
                 className="block py-2 font-display text-2xl text-forest"
                 onClick={() => setOpen(false)}
               >
-                Cart
+                Cart{hydrated && count > 0 ? ` (${count})` : ""}
               </Link>
             ) : null}
             <Link

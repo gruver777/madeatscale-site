@@ -164,6 +164,7 @@ export const collections = [
 ] as const;
 
 export type Collection = (typeof collections)[number];
+export type CollectionKey = Collection["key"];
 
 export const projects = [
   { slug: "wits-campus-parktown", name: "WITS Campus Parktown", place: "Johannesburg", note: "Growthpoint · Paragon · BCMA" },
@@ -181,19 +182,36 @@ export const projects = [
 
 export const materials = ["Steel", "Timber", "Melawood", "Flat-pack durability"] as const;
 
+export type ProductMaterial = "Steel" | "Timber" | "Melawood" | "Mixed";
+export type ProductCategory =
+  | "Desks"
+  | "Beds"
+  | "Bedside"
+  | "Kitchenette"
+  | "Vanity"
+  | "Tables"
+  | "Seating"
+  | "Boardroom"
+  | "Guest packs";
+
 /**
  * Sample catalogue stubs for PDP / card UI.
- * priceZar: null = Request quote (R0 / quote-led live SKUs until migration).
- * Never invent placeholder ZAR as if live.
+ * Names drawn from the live Made@Scale catalogue — no invented ZAR.
+ * priceZar: null = Request quote until Woo migration.
  */
 export type Product = {
   slug: string;
   name: string;
   family: string;
   rangeSlug: Range["slug"];
+  collectionKey: CollectionKey;
+  category: ProductCategory;
+  material: ProductMaterial;
   note: string;
   /** Public ZAR when known; null → "Request quote". */
   priceZar: number | null;
+  materialsList?: string[];
+  dimensionsNote?: string;
 };
 
 export const products: Product[] = [
@@ -202,48 +220,145 @@ export const products: Product[] = [
     name: "Chroma Desk",
     family: "Chroma",
     rangeSlug: "office",
+    collectionKey: "quench",
+    category: "Desks",
+    material: "Steel",
     note: "Streamlined steel-framed workplace desk.",
     priceZar: null,
-  },
-  {
-    slug: "tekton-vanity",
-    name: "Tekton Vanity",
-    family: "Tekton",
-    rangeSlug: "bathroom-and-kitchen",
-    note: "Cabinet and basin, hospitality-ready.",
-    priceZar: null,
-  },
-  {
-    slug: "tango-guest-room-pack",
-    name: "Tango Guest Room Pack",
-    family: "Tango",
-    rangeSlug: "hospitality-and-dining",
-    note: "A complete guest-room furniture set.",
-    priceZar: null,
-  },
-  {
-    slug: "elemento-round-dining-table",
-    name: "Elemento Round Dining Table",
-    family: "Elemento",
-    rangeSlug: "hospitality-and-dining",
-    note: "Timber top, considered proportion.",
-    priceZar: null,
-  },
-  {
-    slug: "excel-metal-bunk",
-    name: "Excel Metal Bunk",
-    family: "Excel",
-    rangeSlug: "bedroom",
-    note: "Flat-pack steel frame for dorm rooms.",
-    priceZar: null,
+    materialsList: ["Powder-coated steel frame", "Melawood top"],
+    dimensionsNote: "Specify width / depth with sales — catalogue variants pending migration.",
   },
   {
     slug: "chroma-tutor-desk",
     name: "Chroma Tutor Desk",
     family: "Chroma",
     rangeSlug: "mining-and-student-living",
+    collectionKey: "quench",
+    category: "Desks",
+    material: "Steel",
     note: "Compact steel-framed teacher’s desk.",
     priceZar: null,
+    materialsList: ["Powder-coated steel", "Melawood"],
+  },
+  {
+    slug: "boardroom-walnut",
+    name: "Boardroom Walnut",
+    family: "Chroma",
+    rangeSlug: "office",
+    collectionKey: "quench",
+    category: "Boardroom",
+    material: "Timber",
+    note: "Boardroom table in walnut timber — statement work surface.",
+    priceZar: null,
+    materialsList: ["Walnut timber top", "Steel underframe"],
+  },
+  {
+    slug: "elemento-eco-bedside",
+    name: "Elemento Eco Bedside",
+    family: "Elemento",
+    rangeSlug: "bedroom",
+    collectionKey: "kiln",
+    category: "Bedside",
+    material: "Melawood",
+    note: "Eco bedside for guest rooms and residences.",
+    priceZar: null,
+    materialsList: ["Melawood", "Quiet hardware"],
+  },
+  {
+    slug: "elemento-round-dining-table",
+    name: "Elemento Round Dining Table",
+    family: "Elemento",
+    rangeSlug: "hospitality-and-dining",
+    collectionKey: "grain",
+    category: "Tables",
+    material: "Timber",
+    note: "Timber top, considered proportion.",
+    priceZar: null,
+    materialsList: ["Solid / engineered timber top", "Steel base"],
+  },
+  {
+    slug: "tekton-vanity",
+    name: "Tekton Vanity",
+    family: "Tekton",
+    rangeSlug: "bathroom-and-kitchen",
+    collectionKey: "kiln",
+    category: "Vanity",
+    material: "Mixed",
+    note: "Cabinet and basin, hospitality-ready.",
+    priceZar: null,
+    materialsList: ["Steel / Melawood cabinet", "Basin by specification"],
+  },
+  {
+    slug: "tekton-kitchenette",
+    name: "Tekton Kitchenette",
+    family: "Tekton",
+    rangeSlug: "bathroom-and-kitchen",
+    collectionKey: "kiln",
+    category: "Kitchenette",
+    material: "Mixed",
+    note: "Hospitality kitchenette unit — compact, durable detailing.",
+    priceZar: null,
+    materialsList: ["Steel frame", "Melawood carcass", "Worktop by finish"],
+  },
+  {
+    slug: "tango-guest-room-pack",
+    name: "Tango Guest Room Pack",
+    family: "Tango",
+    rangeSlug: "hospitality-and-dining",
+    collectionKey: "kiln",
+    category: "Guest packs",
+    material: "Mixed",
+    note: "A complete guest-room furniture set.",
+    priceZar: null,
+    materialsList: ["Mixed steel and timber pack"],
+  },
+  {
+    slug: "endurance-coffee-table",
+    name: "Endurance Coffee Table",
+    family: "Endurance",
+    rangeSlug: "entertainment",
+    collectionKey: "load",
+    category: "Tables",
+    material: "Steel",
+    note: "Low coffee table built for lounge occupancy.",
+    priceZar: null,
+    materialsList: ["Powder-coated steel", "Timber / Melawood top options"],
+  },
+  {
+    slug: "excel-metal-bunk",
+    name: "Excel Metal Bunk",
+    family: "Excel",
+    rangeSlug: "bedroom",
+    collectionKey: "load",
+    category: "Beds",
+    material: "Steel",
+    note: "Flat-pack steel frame for dorm rooms.",
+    priceZar: null,
+    materialsList: ["Powder-coated steel", "Flat-pack hardware"],
+  },
+  {
+    slug: "excel-bunk",
+    name: "Excel Bunk",
+    family: "Excel",
+    rangeSlug: "mining-and-student-living",
+    collectionKey: "load",
+    category: "Beds",
+    material: "Steel",
+    note: "Campus and mancamp bunk — occupancy-first steel.",
+    priceZar: null,
+    materialsList: ["Powder-coated steel"],
+  },
+  {
+    slug: "lagoon-chairs",
+    name: "Lagoon Chairs",
+    family: "Lagoon",
+    rangeSlug: "hospitality-and-dining",
+    collectionKey: "grain",
+    category: "Seating",
+    material: "Mixed",
+    note: "Dining and lounge seating from the Lagoon line.",
+    priceZar: null,
+    materialsList: ["Steel frame", "Upholstery / timber options"],
   },
 ];
 
@@ -253,6 +368,22 @@ export function productBySlug(slug: string) {
 
 export function productsByRange(rangeSlug: string) {
   return products.filter((p) => p.rangeSlug === rangeSlug);
+}
+
+export function productsByCollection(collectionKey: CollectionKey) {
+  return products.filter((p) => p.collectionKey === collectionKey);
+}
+
+export function collectionForProduct(product: Product) {
+  return collections.find((c) => c.key === product.collectionKey);
+}
+
+/** Unique facet values from local catalogue stubs. */
+export function facetOptions(from: Product[] = products) {
+  const categories = Array.from(new Set(from.map((p) => p.category))).sort();
+  const mats = Array.from(new Set(from.map((p) => p.material))).sort();
+  const cols = Array.from(new Set(from.map((p) => p.collectionKey)));
+  return { categories, materials: mats, collectionKeys: cols };
 }
 
 /** Format public ZAR when present; otherwise Request quote. */

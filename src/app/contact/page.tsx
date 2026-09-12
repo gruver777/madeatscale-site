@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LifestyleImage } from "@/components/LifestyleImage";
 import { PageIntro } from "@/components/PageIntro";
-import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { lifestyle } from "@/lib/lifestyle";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,6 +14,15 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <div className="relative">
+        <LifestyleImage
+          shot={lifestyle.contact}
+          className="aspect-[21/7] min-h-36 w-full md:min-h-44"
+          overlay="heavy"
+          sizes="100vw"
+          showCaption
+        />
+      </div>
       <PageIntro
         kicker="Contact"
         title="The workshop is in Centurion."
@@ -62,11 +72,17 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="md:col-span-7">
-          <PlaceholderMedia tone="slate" className="aspect-[4/3]" label="Placeholder — map / approach" />
+          <LifestyleImage
+            shot={lifestyle.oceanSunset}
+            className="aspect-[4/3]"
+            overlay="soft"
+            sizes="(max-width: 768px) 100vw, 55vw"
+            showCaption
+          />
         </div>
       </section>
 
-      {/* Where to Buy folded into Contact (Will, Sep 2026) — showroom visit / sales contact only; no dealer network. */}
+      {/* Where to Buy folded into Contact (Will, Sep 2026) */}
       <section className="border-t border-forest/10 bg-paper">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-16 md:grid-cols-12 md:px-8 md:py-20">
           <div className="md:col-span-5">

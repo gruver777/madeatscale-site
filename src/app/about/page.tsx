@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LifestyleImage } from "@/components/LifestyleImage";
 import { PageIntro } from "@/components/PageIntro";
 import { PlaceholderMedia } from "@/components/PlaceholderMedia";
+import { lifestyle } from "@/lib/lifestyle";
 
 export const metadata: Metadata = {
   title: "About",
@@ -12,6 +14,16 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
+      <div className="relative">
+        <LifestyleImage
+          shot={lifestyle.about}
+          className="aspect-[21/8] min-h-48 w-full md:min-h-64"
+          overlay="heavy"
+          priority
+          sizes="100vw"
+          showCaption
+        />
+      </div>
       <PageIntro
         kicker="About"
         title="A workshop that thinks in schedules."

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { lifestyleCreditNote } from "@/lib/lifestyle";
 import { ranges, site } from "@/lib/site";
 
 export function Footer() {
@@ -103,8 +104,10 @@ export function Footer() {
       </div>
       <div className="border-t border-cream/10">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-2 px-5 py-5 text-[11px] uppercase tracking-[0.16em] text-cream/45 md:flex-row md:justify-between md:px-8">
-          <p>© {new Date().getFullYear()} {site.legal}. All rights reserved.</p>
-          <p>Rebuild scaffold — photography marked as placeholder.</p>
+          <p>
+            © {new Date().getFullYear()} {site.legal}. All rights reserved.
+          </p>
+          <p>{lifestyleCreditNote}</p>
         </div>
       </div>
     </footer>

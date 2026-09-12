@@ -3,7 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/PageIntro";
 import { PlaceholderMedia } from "@/components/PlaceholderMedia";
-import { collectionBySlug, collections } from "@/lib/site";
+import { ProductCard } from "@/components/ProductCard";
+import {
+  collectionBySlug,
+  collections,
+  productsByCollection,
+} from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -25,6 +30,8 @@ export default async function CollectionPage({ params }: Props) {
   const { slug } = await params;
   const collection = collectionBySlug(slug);
   if (!collection) notFound();
+
+  const pieces = productsByCollection(collection.key);
 
   return (
     <>
@@ -51,6 +58,19 @@ export default async function CollectionPage({ params }: Props) {
             “Specified in” projects will author here without inventing inventory.
           </p>
         </div>
+
+        {pieces.length > 0 ? (
+          <div className="mt-16">
+            <p className="eyebrow text-bronze">In {collection.label}</p>
+            <h2 className="mt-3 font-display text-3xl text-forest">Linked pieces</h2>
+            <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {pieces.map((product) => (
+                <ProductCard key={product.slug} product={product} large />
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/collections" className="btn-ghost text-forest">
             All collections

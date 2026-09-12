@@ -17,8 +17,8 @@ export const lifestyle = {
   },
   /** Full-bleed coastal band — prefer Lion’s Head / Blouberg swell */
   coastal: {
-    src: "/lifestyle/lions-head-oceanfront.jpg",
-    alt: "Lion’s Head over the Atlantic oceanfront, Cape Town",
+    src: "/lifestyle/blouberg-table-mountain-sunset.jpg",
+    alt: "Table Mountain across the Atlantic from Bloubergstrand at sunset",
     caption: "Made for African light",
   },
   coastalAlt: {

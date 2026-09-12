@@ -14,8 +14,8 @@ type Props = {
 
 const overlays = {
   none: "",
-  soft: "bg-gradient-to-t from-forest/70 via-forest/25 to-forest/10",
-  heavy: "bg-gradient-to-t from-forest/80 via-forest/40 to-forest/20",
+  soft: "bg-gradient-to-t from-forest/55 via-forest/15 to-transparent",
+  heavy: "bg-gradient-to-t from-forest/70 via-forest/25 to-forest/10",
 } as const;
 
 export function LifestyleImage({
@@ -27,17 +27,20 @@ export function LifestyleImage({
   showCaption = false,
 }: Props) {
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative isolate h-full w-full overflow-hidden ${className}`}>
       <Image
         src={shot.src}
         alt={shot.alt}
         fill
         priority={priority}
         sizes={sizes}
-        className="object-cover"
+        className="object-cover object-center"
       />
       {overlay !== "none" ? (
-        <div className={`pointer-events-none absolute inset-0 ${overlays[overlay]}`} aria-hidden />
+        <div
+          className={`pointer-events-none absolute inset-0 z-[1] ${overlays[overlay]}`}
+          aria-hidden
+        />
       ) : null}
       {showCaption && shot.caption ? (
         <span className="absolute bottom-3 left-3 z-10 text-[10px] uppercase tracking-[0.22em] text-cream/80">

@@ -4,7 +4,13 @@ import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/PageIntro";
 import { ProductImage } from "@/components/ProductImage";
 import { ShowroomPLP } from "@/components/ShowroomPLP";
-import { productsByRange, rangeBySlug, ranges } from "@/lib/site";
+import {
+  productsByRange,
+  rangeBySlug,
+  ranges,
+  subcategoryForGroup,
+  subcategoryHref,
+} from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,8 +23,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const range = rangeBySlug(slug);
   if (!range) return { title: "Range" };
   return {
-    title: range.name,
-    description: range.blurb,
+    title: `${range.name} furniture`,
+    description: `${range.blurb} Made in our Centurion furniture factory.`,
   };
 }
 
@@ -46,14 +52,23 @@ export default async function RangePage({ params }: Props) {
           <div className="md:col-span-5">
             <p className="eyebrow text-bronze">In this range</p>
             <ul className="mt-5 space-y-3">
-              {range.groups.map((group) => (
-                <li
-                  key={group}
-                  className="border-b border-forest/10 py-3 font-display text-2xl text-forest"
-                >
-                  {group}
-                </li>
-              ))}
+              {range.groups.map((group) => {
+                const sub = subcategoryForGroup(range.slug, group);
+                return (
+                  <li
+                    key={group}
+                    className="border-b border-forest/10 py-3 font-display text-2xl text-forest"
+                  >
+                    {sub ? (
+                      <Link href={subcategoryHref(sub)} className="underline-offset-4 hover:underline">
+                        {sub.name}
+                      </Link>
+                    ) : (
+                      group
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className="md:col-span-6 md:col-start-7">

@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { MapEmbed } from "@/components/MapEmbed";
+import { NapBlock } from "@/components/NapBlock";
 import { CoastalStrip } from "@/components/CoastalStrip";
 import { LifestyleImage } from "@/components/LifestyleImage";
 import { ProductImage } from "@/components/ProductImage";
@@ -12,6 +15,13 @@ import {
   site,
 } from "@/lib/site";
 
+export const metadata: Metadata = {
+  title: { absolute: "Centurion Furniture Factory & Shop | Made@Scale" },
+  description:
+    "Furniture factory and shop in Centurion. Made@Scale manufactures durable office, bedroom, mining and hospitality furniture, fulfilled from Centurion.",
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   const proof = [...projects, ...projects];
 
@@ -20,12 +30,14 @@ export default function Home() {
       <section className="relative overflow-x-clip bg-forest text-cream">
         <div className="mx-auto grid min-h-[calc(100svh-4.25rem)] max-w-[1400px] items-end gap-10 px-5 pb-14 pt-16 md:grid-cols-12 md:px-8 md:pb-20 md:pt-20">
           <div className="md:col-span-6 lg:col-span-6">
-            <p className="eyebrow text-bronze">Centurion · Africa · World</p>
-            <h1 className="mt-6 max-w-xl font-display text-[3.4rem] leading-[0.92] tracking-[-0.035em] md:text-[5.4rem]">
+            <h1 className="eyebrow text-bronze">
+              Centurion furniture factory &amp; shop · Dependable furniture manufacturer in Africa
+            </h1>
+            <p className="mt-6 max-w-xl font-display text-[3.4rem] leading-[0.92] tracking-[-0.035em] md:text-[5.4rem]">
               Furniture that
               <br />
               <em className="italic font-normal">holds its line.</em>
-            </h1>
+            </p>
             <p className="mt-8 max-w-md text-base leading-8 text-cream/72 md:text-lg">
               Steel and timber, specified for rooms that work hard — campuses,
               mines, hotels, and residences — without looking institutional.
@@ -68,6 +80,49 @@ export default function Home() {
                 <span className="mx-8 text-bronze">·</span>
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-24">
+        <div className="grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="eyebrow text-bronze">Made in Centurion</p>
+            <h2 className="mt-3 font-display text-4xl tracking-[-0.03em] text-forest md:text-5xl">
+              Our furniture factory &amp; shop in Centurion
+            </h2>
+            <div className="mt-6 space-y-5 text-base leading-8 text-mute">
+              <p>
+                Made@Scale is a furniture factory and furniture shop in
+                Centurion, Gauteng. We design and manufacture furniture at
+                Limeroc Business Park and fulfil orders directly from Centurion
+                — from{" "}
+                <Link href="/showroom/office/office-couches" className="text-forest underline underline-offset-4">
+                  office couches
+                </Link>{" "}
+                and boardroom tables to{" "}
+                <Link href="/showroom/bedroom/bedside-tables" className="text-forest underline underline-offset-4">
+                  bedside tables and bedside cabinets
+                </Link>{" "}
+                for student housing, mining camps and hotels.
+              </p>
+              <p>
+                If you&rsquo;d like to see our furniture in person, call us to make
+                an appointment and we&rsquo;ll take you on a tour of our factory.
+              </p>
+            </div>
+            <NapBlock className="mt-8" />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/contact" className="btn-solid">
+                Visit the factory
+              </Link>
+              <Link href="/furniture-shop-centurion" className="btn-ghost text-forest">
+                Furniture shop Centurion
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-6 md:col-start-7">
+            <MapEmbed className="aspect-[4/3]" />
           </div>
         </div>
       </section>

@@ -31,6 +31,28 @@ export const site = {
     "R114 Knoppieslaagte",
     "Knoppieslaagte 385-Jr, Centurion, 0157",
   ],
+  /**
+   * NAP + geo, copied from the live madeatscale.com footer and Rank Math
+   * LocalBusiness schema (read 21 Oct 2026). Do not edit without checking
+   * the Google Business Profile — NAP must match it exactly.
+   */
+  address: {
+    streetAddress: "Unit 1809, Limeroc Business Park, R114 Knoppieslaagte",
+    addressLocality: "Centurion",
+    addressRegion: "Gauteng",
+    postalCode: "0157",
+    addressCountry: "ZA",
+  },
+  addressOneLine:
+    "Unit 1809, Limeroc Business Park, R114 Knoppieslaagte, Knoppieslaagte 385-Jr, Centurion, 0157, South Africa",
+  geo: { latitude: -25.906416638993534, longitude: 28.033827555395874 },
+  mapHref:
+    "https://www.google.com/maps/search/?api=1&query=-25.906416638993534,28.033827555395874",
+  mapEmbedSrc:
+    "https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s-25.906416638993534,28.033827555395874!6i15",
+  openingHours: "Mo-Fr 08:00-16:00",
+  openingHoursDisplay: "Monday to Friday, 08:00–16:00",
+  siteUrl: "https://madeatscale-site.vercel.app",
   social: {
     facebook: "https://www.facebook.com/madeatscale",
     instagram: "https://www.instagram.com/madeatscale_/",
@@ -1551,4 +1573,72 @@ export function collectionHeroImage(collectionKey: CollectionKey): string | unde
     if (p?.image) return p.image;
   }
   return productsByCollection(collectionKey).find((p) => p.image)?.image;
+}
+
+/**
+ * Showroom sub-categories with their own landing pages (Ahrefs A4, Oct 2026):
+ * "office couches" (90/mo) and "bedside cabinet" (80/mo). Product slugs are
+ * the live catalogue pieces listed on the matching madeatscale.com showroom page.
+ */
+export const subcategories = [
+  {
+    rangeSlug: "office",
+    slug: "office-couches",
+    group: "Couches",
+    name: "Office Couches",
+    title: "Office Couches & Reception Sofas",
+    description:
+      "Office couches from our Centurion furniture factory — 2-seater lounge sofas, upholstered benches and reception seating for waiting areas, breakout spaces and executive lounges.",
+    lede:
+      "2-seater lounge sofas, upholstered benches and reception seating. Built for comfort and professional style in office waiting areas, breakout spaces and executive lounges — made and fulfilled from our Centurion furniture factory.",
+    productSlugs: [
+      "couches-small-living-room-lounge-sofa",
+      "bench-melody-upholstered-seating",
+      "occasional-chairs-lagoon-seating",
+      "occasional-chairs-reception-lounge",
+    ],
+    related: [
+      { href: "/showroom/office", label: "Office furniture" },
+      { href: "/showroom/entertainment", label: "Couches for entertainment spaces" },
+    ],
+  },
+  {
+    rangeSlug: "bedroom",
+    slug: "bedside-tables",
+    group: "Bedside Tables",
+    name: "Bedside Tables & Bedside Cabinets",
+    title: "Bedside Tables & Bedside Cabinets",
+    description:
+      "Bedside tables and bedside cabinets in steel and wood, with smart storage. Made in Centurion for student housing, mining accommodation, hospitality and homes.",
+    lede:
+      "Compact steel and wood bedside tables and bedside cabinets with smart storage. Built to last for student housing, mining accommodation, hospitality and residential bedrooms — made in our Centurion furniture factory.",
+    productSlugs: [
+      "bedside-cabinet-table-tekton",
+      "bedside-cabinet-table-elemento",
+      "bedside-table-elemento-eco",
+      "excel-bedside-table",
+    ],
+    related: [
+      { href: "/showroom/bedroom", label: "Bedroom furniture" },
+      { href: "/showroom/mining-and-student-living", label: "Mining & student living" },
+    ],
+  },
+] as const;
+
+export type Subcategory = (typeof subcategories)[number];
+
+export function subcategoryBySlugs(rangeSlug: string, slug: string) {
+  return subcategories.find((s) => s.rangeSlug === rangeSlug && s.slug === slug);
+}
+
+export function subcategoryForGroup(rangeSlug: string, group: string) {
+  return subcategories.find((s) => s.rangeSlug === rangeSlug && s.group === group);
+}
+
+export function subcategoryForProduct(productSlug: string) {
+  return subcategories.find((s) => (s.productSlugs as readonly string[]).includes(productSlug));
+}
+
+export function subcategoryHref(s: Subcategory) {
+  return `/showroom/${s.rangeSlug}/${s.slug}`;
 }

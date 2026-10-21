@@ -20,6 +20,18 @@ const nextConfig: NextConfig = {
       { source: "/collections/tbd-hospitality", destination: "/collections/kiln", permanent: true },
       { source: "/collections/tbd-campus", destination: "/collections/load", permanent: true },
       { source: "/collections/tbd-statement", destination: "/collections/spine", permanent: true },
+      // Live WP Centurion landing page slug → rebuild route (Ahrefs A4)
+      {
+        source: "/furniture-shop-centurion-online",
+        destination: "/furniture-shop-centurion",
+        permanent: true,
+      },
+      // Live WP showroom sub-category slugs → rebuild routes
+      {
+        source: "/showroom/bedroom-furniture/bedside-tables",
+        destination: "/showroom/bedroom/bedside-tables",
+        permanent: true,
+      },
       // Where to Buy folded into Contact
       {
         source: "/where-to-buy",

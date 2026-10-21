@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist } from "next/font/google";
+import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
 import { SiteShell } from "@/components/SiteShell";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -23,6 +24,7 @@ const display = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.siteUrl),
   title: {
     default: `${site.name} — Contract furniture in steel and timber`,
     template: `%s · ${site.name}`,
@@ -38,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${display.variable} h-full antialiased`}
     >
       <body className="min-h-full overflow-x-clip">
+        <LocalBusinessJsonLd />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

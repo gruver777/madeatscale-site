@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LifestyleImage } from "@/components/LifestyleImage";
+import { MapEmbed } from "@/components/MapEmbed";
+import { NapBlock } from "@/components/NapBlock";
 import { PageIntro } from "@/components/PageIntro";
 import { lifestyle } from "@/lib/lifestyle";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: { absolute: "Contact Us | Centurion Furniture Factory & Shop | Made@Scale" },
   description:
-    "Sales, WhatsApp, and the Centurion workshop — Unit 1809, Limeroc Business Park. Visit the showroom by appointment.",
+    "Visit the Made@Scale furniture factory and shop in Centurion: Unit 1809, Limeroc Business Park, Knoppieslaagte. Call +27 68 005 5750 to book a factory tour.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
@@ -25,8 +28,8 @@ export default function ContactPage() {
       </div>
       <PageIntro
         kicker="Contact"
-        title="The workshop is in Centurion."
-        lede="Call, write, or WhatsApp. Visits by appointment at Limeroc Business Park."
+        title="Contact our Centurion furniture factory"
+        lede="We’re always here to help. Call, write, or WhatsApp — or call us to make an appointment and we’ll take you on a tour of our factory at Limeroc Business Park, Centurion."
       />
       <section className="mx-auto grid max-w-[1400px] gap-12 px-5 pb-16 md:grid-cols-12 md:px-8">
         <div className="md:col-span-5 space-y-8">
@@ -61,24 +64,12 @@ export default function ContactPage() {
             </a>
           </div>
           <div>
-            <p className="eyebrow text-bronze">Workshop</p>
-            <address className="mt-3 not-italic leading-7 text-mute">
-              {site.addressLines.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </address>
+            <p className="eyebrow text-bronze">Visit us — factory &amp; shop</p>
+            <NapBlock className="mt-3" />
           </div>
         </div>
         <div className="md:col-span-7">
-          <LifestyleImage
-            shot={lifestyle.oceanSunset}
-            className="aspect-[4/3]"
-            overlay="soft"
-            sizes="(max-width: 768px) 100vw, 55vw"
-            showCaption
-          />
+          <MapEmbed className="aspect-[4/3]" />
         </div>
       </section>
 
@@ -93,7 +84,7 @@ export default function ContactPage() {
           </div>
           <div className="md:col-span-6 md:col-start-7 space-y-5 text-base leading-8 text-mute">
             <p>
-              Made@Scale sells direct from the Centurion workshop. There is no
+              Made@Scale sells direct from our Centurion furniture factory and shop. There is no
               public dealer network on this site — for samples, specifications,
               and project quotes, contact sales or book a visit.
             </p>

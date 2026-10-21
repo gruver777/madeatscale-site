@@ -10,6 +10,8 @@ import {
   products,
   rangeBySlug,
   site,
+  subcategoryForProduct,
+  subcategoryHref,
 } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -35,6 +37,7 @@ export default async function ProductPage({ params }: Props) {
 
   const range = rangeBySlug(product.rangeSlug);
   const collection = collectionForProduct(product);
+  const sub = subcategoryForProduct(product.slug);
   const priceLabel = site.showPrices ? formatPriceZar(product.priceZar) : null;
   const materials =
     product.materialsList ??
@@ -62,7 +65,24 @@ export default async function ProductPage({ params }: Props) {
             </Link>
           </>
         ) : null}
+        {sub ? (
+          <>
+            <span className="mx-2 text-bronze">/</span>
+            <Link href={subcategoryHref(sub)} className="hover:text-forest">
+              {sub.name}
+            </Link>
+          </>
+        ) : null}
       </nav>
+      {sub ? (
+        <p className="mt-3 text-sm text-mute">
+          Part of our{" "}
+          <Link href={subcategoryHref(sub)} className="text-forest underline underline-offset-4">
+            {sub.name.toLowerCase()}
+          </Link>{" "}
+          range, made in Centurion.
+        </p>
+      ) : null}
 
       <div className="mt-8 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-7">

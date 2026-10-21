@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!collection) return { title: "Collection" };
   return {
     title: collection.label,
+    alternates: { canonical: `/collections/${collection.slug}` },
     description: `${collection.label} — ${collection.tagline}. ${collection.spine}`,
   };
 }

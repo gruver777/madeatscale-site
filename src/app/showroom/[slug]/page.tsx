@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageIntro } from "@/components/PageIntro";
 import { ProductImage } from "@/components/ProductImage";
 import { ShowroomPLP } from "@/components/ShowroomPLP";
 import {
   productsByRange,
   rangeBySlug,
+  rangeSeo,
   ranges,
+  subcategories,
   subcategoryForGroup,
   subcategoryHref,
 } from "@/lib/site";
@@ -22,9 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const range = rangeBySlug(slug);
   if (!range) return { title: "Range" };
+  const seo = rangeSeo[range.slug];
   return {
-    title: `${range.name} furniture`,
-    description: `${range.blurb} Made in our Centurion furniture factory.`,
+    title: seo ? { absolute: `${seo.title} | Made@Scale` } : `${range.name} furniture`,
+    description: seo?.description ?? `${range.blurb} Made in our Centurion furniture factory.`,
+    alternates: { canonical: `/showroom/${range.slug}` },
   };
 }
 
@@ -35,9 +40,34 @@ export default async function RangePage({ params }: Props) {
 
   const rangeProducts = productsByRange(range.slug);
 
+  const rangeSubs = subcategories.filter((s) => s.rangeSlug === range.slug);
+
   return (
     <>
-      <PageIntro kicker="Showroom" title={range.name} lede={range.blurb} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Showroom", path: "/showroom" },
+          { name: range.name, path: `/showroom/${range.slug}` },
+        ]}
+      />
+      <PageIntro kicker="Showroom" title={`${range.name} furniture`} lede={range.blurb} />
+      {rangeSubs.length > 0 ? (
+        <nav aria-label={`${range.name} categories`} className="mx-auto max-w-[1400px] px-5 pb-8 md:px-8">
+          <p className="eyebrow text-bronze">Shop by category</p>
+          <ul className="mt-3 flex flex-wrap gap-3">
+            {rangeSubs.map((s) => (
+              <li key={s.slug}>
+                <Link
+                  href={subcategoryHref(s)}
+                  className="inline-block border border-forest/15 px-4 py-2 text-sm text-forest hover:border-forest"
+                >
+                  {s.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : null}
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-8">
         <ProductImage
           src={"heroImage" in range ? range.heroImage : undefined}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PageIntro } from "@/components/PageIntro";
 import { ShowroomPLP } from "@/components/ShowroomPLP";
 import {
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = subcategoryBySlugs(slug, sub);
   if (!s) return { title: "Showroom" };
   return {
-    title: s.title,
+    title: { absolute: `${s.title} | Made@Scale` },
     description: s.description,
     alternates: { canonical: `/showroom/${s.rangeSlug}/${s.slug}` },
   };
@@ -40,7 +41,14 @@ export default async function SubcategoryPage({ params }: Props) {
 
   return (
     <>
-      <nav className="mx-auto max-w-[1400px] px-5 pt-10 text-[12px] uppercase tracking-[0.14em] text-mute md:px-8">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Showroom", path: "/showroom" },
+          { name: range.name, path: `/showroom/${range.slug}` },
+          { name: s.name, path: `/showroom/${s.rangeSlug}/${s.slug}` },
+        ]}
+      />
+      <nav aria-label="Breadcrumb" className="mx-auto max-w-[1400px] px-5 pt-10 text-[12px] uppercase tracking-[0.14em] text-mute md:px-8">
         <Link href="/showroom" className="hover:text-forest">
           Showroom
         </Link>
@@ -53,6 +61,19 @@ export default async function SubcategoryPage({ params }: Props) {
       </nav>
       <PageIntro kicker={range.name} title={s.name} lede={s.lede} />
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-8">
+        {pieces.length > 0 ? (
+          <p className="max-w-3xl text-base leading-8 text-mute">
+            In this range:{" "}
+            {pieces.map((p, i) => (
+              <span key={p.slug}>
+                <Link href={`/products/${p.slug}`} className="text-forest underline underline-offset-4">
+                  {p.name === p.note || p.name.length > 30 ? p.name : `${p.name} – ${p.note}`}
+                </Link>
+                {i < pieces.length - 2 ? ", " : i === pieces.length - 2 ? " and " : "."}
+              </span>
+            ))}
+          </p>
+        ) : null}
         <div className="mt-6">
           <ShowroomPLP
             products={pieces}

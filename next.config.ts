@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { legacyRedirects } from "./src/lib/legacy-redirects";
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -38,6 +39,8 @@ const nextConfig: NextConfig = {
         destination: "/contact",
         permanent: true,
       },
+      // Every live madeatscale.com WordPress URL → rebuild route (SEO cutover map)
+      ...legacyRedirects,
     ];
   },
 };

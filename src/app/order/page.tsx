@@ -3,6 +3,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/order" },
   title: "Order at Scale",
   description:
     "Start a Made@Scale brief — consultation-led contract furniture, with public ZAR and cart where prices are live.",

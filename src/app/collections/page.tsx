@@ -5,6 +5,7 @@ import { ProductImage } from "@/components/ProductImage";
 import { collectionHeroImage, collections } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/collections" },
   title: "Collections",
   description:
     "Quench, Grain, Kiln, Load, and Spine — Made@Scale collection worlds above the showroom SKUs.",

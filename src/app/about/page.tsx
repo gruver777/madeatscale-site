@@ -6,7 +6,8 @@ import { PlaceholderMedia } from "@/components/PlaceholderMedia";
 import { lifestyle } from "@/lib/lifestyle";
 
 export const metadata: Metadata = {
-  title: "About",
+  alternates: { canonical: "/about" },
+  title: { absolute: "About Made@Scale | Furniture Manufacturer in Centurion" },
   description:
     "Made@Scale is a steel and timber contract furniture manufacturer in Centurion, specified across Africa and beyond.",
 };

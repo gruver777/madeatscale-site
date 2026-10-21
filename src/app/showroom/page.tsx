@@ -6,9 +6,10 @@ import { ShowroomPLP } from "@/components/ShowroomPLP";
 import { products, ranges, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Showroom",
+  alternates: { canonical: "/showroom" },
+  title: { absolute: "Furniture Showroom | Office, Bedroom, Mining & Student, Hospitality | Made@Scale" },
   description:
-    "Browse Made@Scale by range and facets — Quench, Grain, Kiln, Load, Spine. Request quote until live ZAR migrates.",
+    "Discover our showroom with furniture collections for homes, offices, hospitality, student housing and mining camps. Durable, stylish and designed for everyday use.",
 };
 
 export default function ShowroomPage() {

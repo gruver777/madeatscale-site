@@ -3,10 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { ProductGallery } from "@/components/ProductGallery";
+import { BreadcrumbJsonLd, JsonLd } from "@/components/JsonLd";
 import {
   collectionForProduct,
   formatPriceZar,
   productBySlug,
+  productSeoDescription,
+  productSeoTitle,
   products,
   rangeBySlug,
   site,
@@ -24,9 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = productBySlug(slug);
   if (!product) return { title: "Product" };
+  const title = productSeoTitle(product);
   return {
-    title: product.name,
-    description: product.note,
+    title: { absolute: `${title} | Made@Scale` },
+    description: productSeoDescription(product),
+    alternates: { canonical: `/products/${product.slug}` },
+    openGraph: product.image ? { images: [product.image] } : undefined,
   };
 }
 
@@ -43,9 +49,42 @@ export default async function ProductPage({ params }: Props) {
     product.materialsList ??
     [product.material === "Mixed" ? "Steel · timber · Melawood" : product.material];
 
+  const productLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: productSeoTitle(product),
+    description: productSeoDescription(product),
+    url: `${site.siteUrl}/products/${product.slug}`,
+    brand: { "@type": "Brand", name: site.name },
+    manufacturer: { "@id": `${site.siteUrl}/#organization` },
+    category: product.category,
+    material: product.material === "Mixed" ? undefined : product.material,
+    image: (product.gallery?.length ? product.gallery : product.image ? [product.image] : []).map(
+      (src) => `${site.siteUrl}${src}`,
+    ),
+  };
+  // Only real, public ZAR prices produce an Offer. Never emit price 0.
+  if (product.priceZar != null && product.priceZar > 0) {
+    productLd.offers = {
+      "@type": "Offer",
+      price: product.priceZar,
+      priceCurrency: "ZAR",
+      url: `${site.siteUrl}/products/${product.slug}`,
+      seller: { "@id": `${site.siteUrl}/#organization` },
+    };
+  }
+  const crumbs = [
+    { name: "Showroom", path: "/showroom" },
+    ...(range ? [{ name: range.name, path: `/showroom/${range.slug}` }] : []),
+    ...(sub ? [{ name: sub.name, path: subcategoryHref(sub) }] : []),
+    { name: product.name, path: `/products/${product.slug}` },
+  ];
+
   return (
     <article className="mx-auto max-w-[1400px] px-5 pb-28 pt-16 md:px-8 md:pt-24">
-      <nav className="text-[12px] uppercase tracking-[0.14em] text-mute">
+      <JsonLd data={productLd} />
+      <BreadcrumbJsonLd items={crumbs} />
+      <nav aria-label="Breadcrumb" className="text-[12px] uppercase tracking-[0.14em] text-mute">
         <Link href="/showroom" className="hover:text-forest">
           Showroom
         </Link>
@@ -111,7 +150,7 @@ export default async function ProductPage({ params }: Props) {
             ) : null}
           </div>
           <h1 className="mt-3 font-display text-5xl tracking-[-0.03em] text-forest">
-            {product.name}
+            {productSeoTitle(product)}
           </h1>
           <p className="mt-6 text-base leading-8 text-mute">{product.note}</p>
 

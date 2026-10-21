@@ -4,6 +4,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/trade" },
   title: "Trade",
   description:
     "Specifier and trade portal — magic-link access for architects and procurement. Finish library and CAD packs to follow.",

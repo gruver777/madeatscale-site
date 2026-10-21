@@ -4,9 +4,10 @@ import { PlaceholderMedia } from "@/components/PlaceholderMedia";
 import { projects } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  alternates: { canonical: "/projects" },
+  title: { absolute: "Furniture Projects | Campuses, Mining Camps, Hospitality | Made@Scale" },
   description:
-    "Specified work across campuses, mines, hospitality, and residences — WITS, DRC Mining, Doppio Zero, Mount Amanzi, and more.",
+    "Furniture projects by Made@Scale across campuses, mining camps, hospitality and residences: WITS, DRC mining mancamps, Doppio Zero, Mount Amanzi, Bergvallei Retirement Village and more.",
 };
 
 const tones = ["steel", "timber", "bronze", "industrial", "slate", "cream"] as const;

@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     default: `${site.name} — Contract furniture in steel and timber`,
     template: `%s · ${site.name}`,
   },
+  robots: site.indexable ? undefined : { index: false, follow: false },
   description:
     "Steel and timber contract furniture, specified for designers, commercial interiors, mining camps, boarding schools, and residences. Made in Centurion, delivered at African scale.",
 };

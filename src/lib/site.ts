@@ -37,7 +37,7 @@ export const site = {
    * the Google Business Profile — NAP must match it exactly.
    */
   address: {
-    streetAddress: "Unit 1809, Limeroc Business Park, R114 Knoppieslaagte",
+    streetAddress: "Unit 1809, Limeroc Business Park, R114 Knoppieslaagte, Knoppieslaagte 385-Jr",
     addressLocality: "Centurion",
     addressRegion: "Gauteng",
     postalCode: "0157",
@@ -52,7 +52,18 @@ export const site = {
     "https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s-25.906416638993534,28.033827555395874!6i15",
   openingHours: "Mo-Fr 08:00-16:00",
   openingHoursDisplay: "Monday to Friday, 08:00–16:00",
-  siteUrl: "https://madeatscale-site.vercel.app",
+  /**
+   * Canonical origin. Defaults to the production domain so canonicals, sitemap and
+   * JSON-LD already point at madeatscale.com for cutover. Override per env with
+   * NEXT_PUBLIC_SITE_URL.
+   */
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://madeatscale.com").replace(/\/$/, ""),
+  /**
+   * Search indexing guard. The Vercel preview must NOT compete with the live
+   * WordPress site, so robots.txt disallows all and pages carry noindex unless
+   * SITE_INDEXABLE=true is set (only at cutover on madeatscale.com).
+   */
+  indexable: process.env.SITE_INDEXABLE === "true",
   social: {
     facebook: "https://www.facebook.com/madeatscale",
     instagram: "https://www.instagram.com/madeatscale_/",
@@ -129,7 +140,7 @@ export const ranges = [
     slug: "office",
     name: "Office",
     blurb: "Desks, boardrooms, storage, and seating for workplaces that need to last a decade.",
-    groups: ["Boardroom", "Canteen", "Chairs", "Couches", "Desks", "Dividers", "Storage"],
+    groups: ["Boardroom", "Canteen", "Chairs", "Couches", "Desks", "Dividers", "Storage", "Accessories"],
     lines: ["Chroma", "Endurance", "Lagoon"],
     tone: "slate",
     heroImage: "/products/mining-student/chroma-desk-for-office.png",
@@ -1623,6 +1634,117 @@ export const subcategories = [
       { href: "/showroom/mining-and-student-living", label: "Mining & student living" },
     ],
   },
+  {
+    rangeSlug: "mining-and-student-living",
+    slug: "steel-bunk-beds",
+    group: "Beds",
+    name: "Steel Bunk Beds & Loft Beds",
+    title: "Steel Bunk Beds & Loft Beds for Mining & Student Housing",
+    description:
+      "Steel bunk beds, loft beds and single and double bed frames for mining camps and student housing. Flat-pack, easy to assemble, made in Centurion.",
+    lede:
+      "Our steel bunk beds, loft beds and single and double bed frames are engineered for strength, easy assembly and long service life. Built for mining camps, student housing and dorm rooms, they make the most of every room without compromising comfort.",
+    productSlugs: [
+      "bunk-beds-and-loft-beds-dorm-frame",
+      "bunk-bed-excel-metal-flat-pack",
+      "steel-bed-excel-frame",
+      "single-bed-elemento-frame",
+      "double-bed-elemento-steel-frame",
+      "enduro-steel-bed",
+    ],
+    related: [
+      { href: "/showroom/mining-and-student-living", label: "Mining & student living furniture" },
+      { href: "/showroom/bedroom/bedside-tables", label: "Bedside tables & bedside cabinets" },
+      { href: "/showroom/mining-and-student-living/steel-lockers", label: "Steel lockers & storage" },
+    ],
+  },
+  {
+    rangeSlug: "mining-and-student-living",
+    slug: "steel-lockers",
+    group: "Storage",
+    name: "Steel Lockers & Storage",
+    title: "Steel Lockers & Steel Cupboards | Secure Storage",
+    description:
+      "Steel lockers, steel cupboards and multi-purpose cabinets for secure, organised storage in mining camps, student housing, offices and schools. Made in Centurion.",
+    lede:
+      "Our storage range covers steel lockers, steel cupboards and multi-purpose cabinets for secure, organised living. Built to withstand heavy use, they keep personal and communal spaces tidy in mining accommodation, student residences and offices.",
+    productSlugs: [
+      "chroma-steel-locker-cabinet",
+      "chroma-short-locker-cabinet",
+      "cabinet-tekton-economy-bic",
+      "cupboard-endurance-bic-melawood",
+      "chroma-filing-cabinet",
+    ],
+    related: [
+      { href: "/showroom/mining-and-student-living/steel-bunk-beds", label: "Steel bunk beds" },
+      { href: "/showroom/office", label: "Office furniture" },
+    ],
+  },
+  {
+    rangeSlug: "bathroom-and-kitchen",
+    slug: "kitchenettes",
+    group: "Kitchenette",
+    name: "Kitchenettes & Kitchenette Counters",
+    title: "Kitchenettes & Kitchenette Units | Steel Counters with Sinks",
+    description:
+      "Steel kitchenettes and kitchenette units with integrated sinks or storage, for student housing, hospitality and office break areas. Fulfilled from Centurion.",
+    lede:
+      "Durable steel kitchenettes, kitchen counters and coffee counters for student housing, hospitality and office break areas. Each unit combines a practical layout with an integrated sink or storage, so meal prep and beverage service stay efficient.",
+    productSlugs: [
+      "kitchen-sink-tekton-steel-kitchenette",
+      "tekton-cabinet-kitchen-design-steel-sink",
+      "tekton-coffee-counter",
+      "guest-room-furniture-tango-hospitality-set",
+    ],
+    related: [
+      { href: "/showroom/bathroom-and-kitchen", label: "Bathroom & kitchen furniture" },
+      { href: "/showroom/hospitality-and-dining", label: "Hospitality & dining" },
+    ],
+  },
+  {
+    rangeSlug: "bedroom",
+    slug: "study-desks",
+    group: "Desks",
+    name: "Study Desks",
+    title: "Study Desks for Small Bedrooms & Student Housing",
+    description:
+      "Compact study desks, wall-mounted workstations and modern desks built for comfort and productivity in small bedrooms and student housing. Made in Centurion.",
+    lede:
+      "Compact study desks, wall-mounted workstations and modern desks, built for comfort and productivity in small bedrooms, student residences and mining accommodation.",
+    productSlugs: [
+      "excel-study-desk",
+      "study-desk-wall-mounted-tekton",
+      "study-desk-elemento-compact",
+      "chroma-budget-loop-desk-for-sale",
+      "chroma-tutor-desk",
+    ],
+    related: [
+      { href: "/showroom/bedroom", label: "Bedroom furniture" },
+      { href: "/showroom/office", label: "Office desks" },
+    ],
+  },
+  {
+    rangeSlug: "office",
+    slug: "office-accessories",
+    group: "Accessories",
+    name: "Laptop Stands & Pegboards",
+    title: "Laptop Stands & Steel Pegboards | Office Accessories",
+    description:
+      "Powder-coated steel laptop stands and Tekton pegboard wall organisers with hooks, trays and boxes for offices, studios and workshops. Made in Centurion.",
+    lede:
+      "Ergonomic steel laptop stands for desk, sofa or bed, and Tekton pegboard wall organisers in small, medium and large sizes with modular hooks, trays and boxes for offices, studios and workshops.",
+    productSlugs: [
+      "ergo-laptop-stand",
+      "multipurpose-laptop-stand",
+      "tekton-pegboard-board-small",
+      "tekton-medium-pegboard",
+      "tekton-large-pegboard-peg-board",
+    ],
+    related: [
+      { href: "/showroom/office", label: "Office furniture" },
+      { href: "/showroom/office/office-couches", label: "Office couches" },
+    ],
+  },
 ] as const;
 
 export type Subcategory = (typeof subcategories)[number];
@@ -1642,3 +1764,52 @@ export function subcategoryForProduct(productSlug: string) {
 export function subcategoryHref(s: Subcategory) {
   return `/showroom/${s.rangeSlug}/${s.slug}`;
 }
+
+/** SEO title for a product: family line + live descriptor, both from the live catalogue. */
+export function productSeoTitle(p: Product): string {
+  const note = p.note.length <= 70 ? p.note : "";
+  const base = note && !p.name.includes(note) ? `${p.name} – ${note}` : p.name;
+  return base;
+}
+
+/** Meta description for a product, built only from catalogue facts. */
+export function productSeoDescription(p: Product): string {
+  const range = rangeBySlug(p.rangeSlug);
+  const lead = p.note.length > 70 ? p.note : `${p.name}: ${p.note}.`;
+  const tail = ` ${p.family !== "Made@Scale" ? p.family + " line, " : ""}${range ? range.name.toLowerCase() + " range" : "Made@Scale"}. Made in our Centurion furniture factory.`;
+  return (lead + tail).slice(0, 300);
+}
+
+/** SEO titles for range pages (keyword-led, mirroring the live Rank Math titles). */
+export const rangeSeo: Record<string, { title: string; description: string }> = {
+  office: {
+    title: "Office Furniture | Desks, Chairs, Boardroom & Storage",
+    description:
+      "Office furniture from our Centurion furniture factory: office desks, cluster workstations, office chairs, boardroom tables, office couches and steel storage.",
+  },
+  bedroom: {
+    title: "Bedroom Furniture | Beds, Wardrobes, Study Desks & Bedside Tables",
+    description:
+      "Bedroom furniture built to last: steel beds, wardrobes and cupboards, study desks and bedside tables for student housing, hospitality and homes. Made in Centurion.",
+  },
+  "mining-and-student-living": {
+    title: "Mining & Student Accommodation Furniture | Bunk Beds, Lockers & Desks",
+    description:
+      "Mining and student living furniture: steel bunk beds, compact desks, steel lockers, wardrobes and seating built for high-use accommodation. Made in Centurion.",
+  },
+  "bathroom-and-kitchen": {
+    title: "Bathroom & Kitchen Furniture | Kitchenettes, Vanities & Fixtures",
+    description:
+      "Steel kitchenettes with sinks, bathroom vanity units and bathroom fixtures for student housing, hospitality and offices. Made in our Centurion furniture factory.",
+  },
+  entertainment: {
+    title: "Entertainment Furniture | Couches, Coffee Tables & TV Stands",
+    description:
+      "Couches, coffee and side tables, TV stands and tables for lounges, lodges and shared living rooms. Made in our Centurion furniture factory.",
+  },
+  "hospitality-and-dining": {
+    title: "Hospitality & Dining Furniture | Dining Tables, Chairs & Guest-Room Sets",
+    description:
+      "Dining tables, dining chairs, bar stools and guest-room furniture packs for hotels, lodges, canteens and residences. Made in our Centurion furniture factory.",
+  },
+};
